@@ -1,0 +1,16 @@
+name: project_workflow1
+on: push
+jobs: 
+  deploy:
+    runs-on: ubuntu-latest
+    steps: 
+      -name: gitcode
+       uses: actions/checkout@v3
+      -name: installdependencies
+       run: npm ci
+      -name: lint
+       run: npm run lint
+      -name: test code
+       run: npm run test
+      -name: deploy
+       run: echo "Deploying......"
