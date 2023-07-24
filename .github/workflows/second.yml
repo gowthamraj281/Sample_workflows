@@ -1,5 +1,5 @@
 name: workflow1
-on: [push , workflow_dispatch]
+on: [pull_request , workflow_dispatch]
 jobs:
   Code_checkout:
     runs-on: ubuntu-latest
