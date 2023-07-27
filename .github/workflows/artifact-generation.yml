@@ -1,0 +1,14 @@
+name: artifact_generation
+on: [push, workflow_dispatch]
+jobs:
+  artifact_upload:
+    runs-on: ubuntu-latest
+    steps:
+      -name: artifacts-generate
+       uses: actions/checkout@v3
+       with:
+        name: web-artifacts
+        path: |
+          .github/workflows
+          package.json
+          package.lock.*
