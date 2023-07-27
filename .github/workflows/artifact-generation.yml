@@ -4,11 +4,17 @@ jobs:
   artifact_upload:
     runs-on: ubuntu-latest
     steps:
-      -name: artifacts-generate
-       uses: actions/upload-artifact@v3
-       with:
-        name: web-artifacts
-        path: |
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: npm ci
+      - name: Build code
+        run: npm run build
+      - name: artifact
+        uses: actions/upload-artifact@v3
+        with:
+         name: web-artifacts
+         path: |
           .github/workflows
           package.json
           package.lock.*
