@@ -1,7 +1,5 @@
 name: workflow1
-on: 
-  pull_request:
-    - closed
+on: pull_request
 jobs:
   deploy:
     runs-on: ubuntu-latest
