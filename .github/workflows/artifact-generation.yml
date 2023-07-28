@@ -17,4 +17,15 @@ jobs:
          path: |
           .github/workflows
           package.json
-          package.lock.*
+          package-lock.*
+  download_artifacts:
+    needs: artifact_upload
+    runs-on: ubuntu-latest
+    steps:
+      - name: artifacts_download
+        uses: actions/download-artifact@v3
+        with:
+         name: web-artifacts
+      - name: show_artifacts
+        run: ls
+  
