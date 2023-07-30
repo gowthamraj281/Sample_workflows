@@ -1,8 +1,10 @@
 name: artifact_generation
 on: [push, workflow_dispatch]
 jobs:
-  artifact_upload:
+  set_outputs:
     runs-on: ubuntu-latest
+    outputs: 
+      script-file: ${{steps.publish.outputs.script-file}}
     steps:
       - name: Get code
         uses: actions/checkout@v3
@@ -10,6 +12,13 @@ jobs:
         run: npm ci
       - name: Build code
         run: npm run build
+      - name: Publish_website
+        id: publish
+        run: find dist/assests/*.js -type f -exec dir rcho 'script-file={}' >> $GITHUB_OUTPUT ';'
+  artifact_upload:
+    needs: set_outputs
+    runs-on: ubuntu-latest
+    steps:
       - name: artifact
         uses: actions/upload-artifact@v3
         with:
@@ -28,4 +37,7 @@ jobs:
          name: web-artifacts
       - name: show_artifacts
         run: ls
-  
+      - name: output filename
+        run: echo "{{needs.set_outputs.outputs.script-file}}"
+      - name: deploying
+        run: echo "SUCCESSFULLY DEPLOYED"
