@@ -1,4 +1,4 @@
-name: Dependencies_Caching
+name: Caching
 on: [ push , workflow_dispatch ]
 jobs:
   Code_checkout:
@@ -6,12 +6,6 @@ jobs:
     steps:
       - name: Get code
         uses: actions/checkout@v3
-      - name: dependency cache
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-      - name: Install dependencies
-        run: npm ci
   Dependencies:
     runs-on: ubuntu-latest
     steps:
@@ -21,6 +15,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.npm
+          key: deps-nodes-modules-${{hashFiles ('**/package-lock.json') }}
       - name: Install dependencies
         run: npm ci
   Run_Lint:
@@ -33,6 +28,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.npm
+          key: deps-nodes-modules-${{hashFiles ('**/package-lock.json') }}
       - name: Install dependencies
         run: npm ci
       - name: Lint
@@ -47,6 +43,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.npm
+          key: deps-nodes-modules-${{hashFiles ('**/package-lock.json') }}
       - name: Install dependencies
         run: npm ci
       - name: Test code
@@ -61,6 +58,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.npm
+          key: deps-nodes-modules-${{hashFiles ('**/package-lock.json') }}
       - name: Install dependencies
         run: npm ci
       - name: Build code
@@ -89,6 +87,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.npm
+          key: deps-nodes-modules-${{hashFiles ('**/package-lock.json') }}
       - name: Install dependencies
         run: npm ci
       - name: Build code
