@@ -1,7 +1,8 @@
+
 name: artifact_generation
 on: [push, workflow_dispatch]
 jobs:
-  set_outputs:
+  artifact_upload:
     runs-on: ubuntu-latest
     outputs: 
       script-file: ${{steps.publish.outputs.script-file}}
@@ -15,15 +16,12 @@ jobs:
       - name: Publish_website
         id: publish
         run: find src/assets/images/*.png -type f -execdir echo 'script-file={}' >> $GITHUB_OUTPUT ';'
-  artifact_upload:
-    needs: set_outputs
-    runs-on: ubuntu-latest
-    steps:
       - name: artifact
         uses: actions/upload-artifact@v3
         with:
          name: web-artifacts
          path: |
+          src
           .github/workflows
           package.json
           package-lock.*
@@ -39,5 +37,5 @@ jobs:
         run: ls
       - name: output filename
         run: echo "{{needs.set_outputs.outputs.script-file}}"
-      - name: deploying
-        run: echo "SUCCESSFULLY DEPLOYED"
+      - name: Deploying
+        run: echo "Deploying......"
