@@ -1,0 +1,99 @@
+name: Dependencies_Caching
+on: [ push , workflow_dispatch ]
+jobs:
+  Code_checkout:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+  Dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: dependency cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+      - name: Install dependencies
+        run: npm ci
+  Run_Lint:
+    needs: Code_checkout
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: dependency cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+  Test_code:
+    needs: Run_Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: dependency cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Test code
+        run: npm run test
+  Build:
+    needs: Test_code
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: dependency cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Build code
+        run: npm run build
+      - name: Publish_website
+        id: publish
+        run: find src/assets/images/*.png -type f -execdir echo 'script-file={}' >> $GITHUB_OUTPUT ';'
+      - name: artifact
+        uses: actions/upload-artifact@v3
+        with:
+         name: web-artifacts
+         path: |
+          src
+          .github/workflows
+          package.json
+          package-lock.*
+  Deploy:
+    needs: Build
+    runs-on: ubuntu-latest
+    outputs: 
+      script-file: ${{steps.publish.outputs.script-file}}
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: dependency cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Build code
+        run: npm run build
+      - name: artifacts_download
+        uses: actions/download-artifact@v3
+        with:
+         name: web-artifacts
+      - name: show_artifacts
+        run: ls
+      - name: output filename
+        run: echo "{{needs.set_outputs.outputs.script-file}}"
+      - name: Deploy code
+        run: echo "Deploying..."
