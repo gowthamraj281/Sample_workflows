@@ -14,7 +14,7 @@ jobs:
         run: npm run build
       - name: Publish_website
         id: publish
-        run: find src/assests/images/* -type f -exec dir rcho 'script-file={}' >> $GITHUB_OUTPUT ';'
+        run: find src/assets/images/*.png -type f -exec dir rcho 'script-file={}' >> $GITHUB_OUTPUT ';'
   artifact_upload:
     needs: set_outputs
     runs-on: ubuntu-latest
