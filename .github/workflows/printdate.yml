@@ -8,7 +8,7 @@ jobs:
     steps:
         - name: get current date
           id: date_provide
-          run: echo "CURRENT_DATE=$(date +%Y_%m_%d).${{ github.run_number }}" >> $GITHUB_ENV
+          run: echo "CURRENT_DATE=$(date +%Y_%m_%d).${{ github.run_number }}" >> $GITHUB_OUTPUT
         - name: print_date
           run: echo $CURRENT_DATE
   access_date_from_previous_job:
