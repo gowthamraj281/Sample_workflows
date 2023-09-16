@@ -5,6 +5,6 @@ jobs:
     runs-on : ubuntu-latest
     steps: 
         - name: get a date
-          run: echo "NOW:$(date +%Y-%m-%d)" >> $GITHUB_ENV
+          run: echo "NOW:$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
         - name: print_dtate
           run: echo $NOW
