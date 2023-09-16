@@ -1,10 +1,10 @@
 name: printdate
 on: [push, workflow_dispatch ]
+env:
+  CURRENT_DATE: $(date +%Y-%m-%d)
 jobs:
   printing_date:
     runs-on : ubuntu-latest
-    steps: 
-        - name: get a date
-          run: echo "NOW=$(date +%Y-%m-%d)" >> $GITHUB_ENV
+    steps:
         - name: print_date
           run: echo $NOW
