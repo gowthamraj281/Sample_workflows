@@ -3,13 +3,16 @@ on: [push, workflow_dispatch ]
 jobs:
   printing_date:
     runs-on : ubuntu-latest
+    outputs: ${{ steps.date_provide.outputs.CURRENT_DATE }}
     steps:
         - name: get current date
-          run: echo "CURRENT_DATE=$(date +%Y_%m_%d).${{ github.run_number }}" >> $GITHUB_ENV
+          id: date_provide
+          run: echo "CURRENT_DATE=$(date +%Y_%m_%d).${{ github.run_number }}" >> $GITHUB_OUTPUT
         - name: print_date
           run: echo $CURRENT_DATE
   access_date_from_previous_job:
+    needs: printing_date
     runs-on : ubuntu-latest
     steps:
       - name: access_date
-        run : echo $CURRENT_DATE
+        run : echo ${{ needs.date_provide.outputs.CURRENT_DATE }}
