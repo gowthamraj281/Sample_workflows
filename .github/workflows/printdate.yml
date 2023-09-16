@@ -1,16 +1,16 @@
 name: printdate
 env: 
-  CURRENT_DATE: $(date +%Y_%m_%d)
+  CURRENT_DATE: $(date +'%Y_%m_%d')
 on: [push, workflow_dispatch ]
 jobs:
   printing_date:
     runs-on : ubuntu-latest
     steps:
         - name: print_date
-          run: echo $CURRENT_DATE
+          run: echo ${{env.CURRENT_DATE}}
   access_date_from_previous_job:
     needs: printing_date
     runs-on : ubuntu-latest
     steps:
       - name: access_date
-        run : echo echo $CURRENT_DATE
+        run : echo echo ${{env.CURRENT_DATE}}
