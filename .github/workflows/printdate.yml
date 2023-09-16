@@ -1,6 +1,6 @@
 name: printdate
 env: 
-  CURRENT_DATE: $(date +'%Y_%m_%d')
+  CURRENT_DATE: $(date +%Y_%m_%d)
 on: [push, workflow_dispatch ]
 jobs:
   printing_date:
