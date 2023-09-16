@@ -4,11 +4,11 @@ jobs:
   printing_date:
     runs-on : ubuntu-latest
     outputs: 
-      CURRENT_date: ${{ steps.date_provide.outputs.CURRENT_DATE }}
+      CURRENT_DATE: ${{ steps.date_provide.outputs.CURRENT_DATE }}
     steps:
         - name: get current date
           id: date_provide
-          run: echo "CURRENT_DATE=$(date +%Y_%m_%d).${{ github.run_number }}" >> $GITHUB_OUTPUT
+          run: echo "CURRENT_DATE=$(date +%Y_%m_%d).${{ github.run_number }}" >> $GITHUB_ENV
         - name: print_date
           run: echo $CURRENT_DATE
   access_date_from_previous_job:
