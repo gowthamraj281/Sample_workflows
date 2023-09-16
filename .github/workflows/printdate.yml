@@ -1,7 +1,7 @@
 name: printdate
 on: [workflow_dispatch ]
 env:
-  NOW: $(date + '%Y-%m-%d')
+  NOW: $(date + '%Y-%m-%d') >> $GITHUB_OUTPUT
 jobs:
   printing_date:
     runs-on : ubuntu-latest
