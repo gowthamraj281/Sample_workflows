@@ -1,7 +1,7 @@
 name: printdate
 env: 
   CURRENT_DATE: $(date +'%Y_%m_%d')
-on: [push, workflow_dispatch ]
+on: [workflow_dispatch ]
 jobs:
   printing_date:
     runs-on : ubuntu-latest
