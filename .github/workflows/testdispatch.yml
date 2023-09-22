@@ -2,8 +2,10 @@ name: Test
 
 on:
   workflow_dispatch:
-  release:
-    types: [created]
+    inputs:
+      puppy:
+        description: 'creation'
+        required: true
   
 jobs:
   build:
