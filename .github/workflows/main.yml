@@ -1,0 +1,12 @@
+name: workflow dispatch
+
+on:
+  workflow_dispatch:
+  release:
+    types: [created]
+jobs:
+  checkout_branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
